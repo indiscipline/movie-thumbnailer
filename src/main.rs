@@ -10,8 +10,6 @@ use std::io;
 use std::io::prelude::*;
 use std::path::PathBuf;
 use std::process::Command;
-//use clap::{Arg, App};
-//use std::process;
 
 struct Thumbnail {
     w: usize,
@@ -24,16 +22,16 @@ struct Thumbnail {
 fn main() {
     let cfg = config::get();
 
-    ////////////////////////////////////////////////////////////////////////
     let work_dir = env::current_dir().unwrap();
     let frames_dir = work_dir.join("frames");
 
     if cfg.is_present("INPUT") {
         let input_path = PathBuf::from(cfg.value_of("INPUT").unwrap().to_string());
+        println!("Extracting scene change frames. This may take a while...");
         extract_scenes(&input_path, &frames_dir);
-        println!("Remove falsely identified scene change frames manually!");
-        println!("Press any key to continue...");
-        io::stdin().read(&mut [0u8]).unwrap();
+        println!("Please, manually remove falsely identified or unwanted scene change frames from the \"frames\" directory.");
+        println!("Press any key to continue when done...");
+        io::stdin().read_exact(&mut [0u8]).unwrap();
     } else {
         println!("No input file given, looking for saved frames...");
     }
@@ -42,6 +40,7 @@ fn main() {
     if preprocessed_dir.is_dir() && cfg.is_present("skip") {
         println!("Found directory with preprocessed files. Skipping.");
     } else {
+        println!("Preprocessing extracted frames. This may take a while...");
         preprocess_frames(&work_dir, &preprocessed_dir);
     }
 
@@ -105,7 +104,7 @@ fn calc_thumbnail_size(
 }
 
 fn parse_resolution(s: &str) -> Vec<(usize, usize)> {
-    s.split(',')
+    s.trim().split(',')
         .map(|r| {
             let res = r
                 .splitn(2, 'x')
@@ -168,7 +167,7 @@ fn montage(
         ])
         .args(&["-tile", &thumb.columns.to_string()])
         .arg(target.join(format!("montage-{}x{}.png", display_w, display_h)));
-    println!("{:?}", command);
+    //println!("{:?}", command);
 
     let output = command.output().expect("Failed to execute process");
     if !&output.stderr.is_empty() {
@@ -219,7 +218,6 @@ fn preprocess_frames(source: &PathBuf, target: &PathBuf) {
                 "0.3",
                 "-modulate",
                 "100x110",
-                //"-resize", "50%",
                 "-gamma",
                 "2.2",
             ])

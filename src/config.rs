@@ -1,10 +1,10 @@
 extern crate clap;
 
-use clap::{App, Arg};
+use clap::{App, Arg, crate_version, crate_authors};
 use std::fs;
 use std::process;
 
-static LICENSE: &'static str =
+static LICENSE: &str =
     "Movie-wallpaper licensed under GNU General Public License version 3 or later;
 Full License available at <http://gnu.org/licenses/gpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -12,9 +12,9 @@ There is NO WARRANTY, to the extent permitted by law.";
 
 pub fn get<'a>() -> clap::ArgMatches<'a> {
     let cfg = App::new("movie-wallpaper")
-        //.author(crate_authors!())
-        //.version(crate_version!())
-        .about("Create a wallpaper composed of tiled frames of scene changes from supplied video.")
+        .author(crate_authors!())
+        .version(crate_version!())
+        .about("Create a wallpaper composed of tiled frames of scene changes from supplied video.\nThis program depends on imagemagick ('magick') and ffmpeg executables!")
         .arg(
             Arg::with_name("INPUT")
                 .help("Path to the input file to process.")
