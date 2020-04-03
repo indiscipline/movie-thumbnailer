@@ -2,9 +2,10 @@
 
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/Indiscipline/movie-thumbnailer/blob/master/LICENSE.md)
 
-Command line "glue" for [ffmpeg](https://ffmpeg.org/) and [imagemagick](https://www.imagemagick.org/) which generates wallpaper  from video files, containing frames with scene changes
+Command line "glue" for [ffmpeg](https://ffmpeg.org/) and [ImageMagick](https://www.imagemagick.org/) which generates wallpaper  from video files, containing frames with scene changes
 The program expects `ffmpeg` and `magick` to be in your PATH.
 
+**Expanded description [>> in the blog post <<](https://indiscipline.github.io/post/movie-thumbnailer-announcement/)**
 
 Developed using the wonderful [Clap](https://github.com/kbknapp/clap-rs) and [Rayon](https://github.com/rayon-rs/rayon) crates.
 
@@ -40,6 +41,13 @@ The executable will be `target/release/movie-thumbnailer`.
 
 ## Contributing ##
 This is a small helper utility which achieves its intended functionality, but if you know how to improve it, file a bug report via [Issues](https://github.com/Indiscipline/movie-thumbnailer/issues).
+
+Possible enhancements:
+* [ ] Options for margin coefficients
+* [ ] Option for scene detection threshold
+* [ ] Ask for removing temporary files on completion
+* [ ] Open the file browser with the `frames` directory at the manual thinnig-out stage
+* [ ] Option for generating the final image with any solid background
 
 ## License ##
 **movie-thumbnailer** licensed under GNU General Public License version 3 or later;
